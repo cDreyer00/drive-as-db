@@ -1,6 +1,6 @@
 XLSX = require('xlsx');
 
-const read = (xlsxPath, columns) => new Promise((resolve, reject) => {
+const read = (xlsxPath) => new Promise((resolve, reject) => {
     try {
         //catch file
         const workBook = XLSX.readFile(xlsxPath);
