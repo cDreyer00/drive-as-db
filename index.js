@@ -28,10 +28,8 @@ app.get("/url", async (req, res) => {
     
     const data = await response.arrayBuffer();
     
-    // if(!fileName) return res.status(400).send("No filename provided")
-    
     try{
-        const objData = await readOnline(data);
+        let objData = await readOnline(data);
         return res.json(objData);
     }
     catch(e){

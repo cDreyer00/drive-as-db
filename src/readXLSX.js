@@ -29,7 +29,6 @@ async function readOnline(data) {
             });
 
             let converted = convertObject(res)
-
             resolve(converted);
         }
         catch (e) {
