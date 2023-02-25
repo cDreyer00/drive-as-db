@@ -1,12 +1,12 @@
 XLSX = require('xlsx');
 
-async function read(xlsxPath) {
+async function read(xlsxPath, sheetName) {
     return await new Promise((resolve, reject) => {
         try {
             //catch file
             const workBook = XLSX.readFile(xlsxPath);
-            const worksheet = workBook.Sheets[workBook.SheetNames[0]];
-
+            const worksheet = workBook.Sheets[sheetName];
+            
             const data = XLSX.utils.sheet_to_json(worksheet)
             resolve(data);
         }
@@ -69,6 +69,21 @@ function convertObject(inputArray) {
 
     return outputArray;
 }
+
+// const fetch = require("node-fetch");
+// async function runTest(url) {
+//     // const response = await fetch(url, {
+//     //     method: "GET",
+//     //     responseType: "arraybuffer"
+//     // });
+
+//     // const data = await response.arrayBuffer();
+//     let path = './files/SilverChest.xlsx'
+//     let res = await readTest(path, "PlatinumChest")
+//     console.log(res);
+// }
+
+// runTest("https://docs.google.com/spreadsheets/d/1fKx8avg2JKEipgTIpLR9UNsidefshmCUIo0MfdS818s/edit?usp=share_link");
 
 
 module.exports = {

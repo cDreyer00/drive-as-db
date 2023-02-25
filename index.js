@@ -1,14 +1,21 @@
 const app = require("express")();
 const {read, readOnline} = require("./src/readXLSX.js");
 const fetch = require("node-fetch");
+const { json } = require("express");
 
-app.get("/file/:fileName", async (req, res) => {
-    const fileName = req.params.fileName;
+app.use(json());
+
+app.post("/file", async (req, res) => {
+    const { sheetName, fileName } = req.body;
+
+    const date = new Date();
+    console.log(`file required AT -> ${date.getHours()}:${date.getMinutes()}`)
+    console.log(`NAME => ${fileName} | SHEET_NAME => ${sheetName}`)
     
-    if(!fileName) return res.status(400).send("No filename provided")
-
+    if(!fileName || !sheetName) return res.status(400).send("No filename provided")
+    
     try{
-        const data = await read(`./files/${fileName}.xlsx`);
+        const data = await read(`./files/${fileName}.xlsx`, sheetName);
         return res.json(data);
     }
     catch(e){
@@ -18,7 +25,7 @@ app.get("/file/:fileName", async (req, res) => {
 
 app.get("/url", async (req, res) => {
     const url = req.query.url;
-
+    console.log(url);
     if(!url) return res.status(400).send("no url provided")
 
     const response = await fetch(url, {
