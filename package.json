@@ -1,5 +1,5 @@
 {
-  "name": "kreativitas-backend",
+  "name": "content-provider",
   "version": "1.0.0",
   "description": "read, treat and provide contet of text files",
   "main": "index.js",
@@ -19,6 +19,7 @@
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
     "@googleapis/drive": "^4.0.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "googleapis": "^105.0.0",
     "node-fetch": "^2.6.8",
