@@ -45,40 +45,33 @@ async function uploadFile(filePath, fileName, driveFolderID) {
 async function searchFile(fileName) {
     const searchQuery = `name='${fileName}' and trashed=false`;
     const { data } = await drive.files.list({
-      q: searchQuery,
-      fields: 'files(id, name)',
+        q: searchQuery,
+        fields: 'files(id, name)',
     });
     if (data.files.length === 0) {
-      console.log('File not found.');
-      return null;
+        console.log('File not found.');
+        return null;
     }
     return data.files[0];
-  }
-  
-  async function downloadFile(fileName, downloadPath) {
-      const file = await searchFile(fileName);
-      if (!file) return;
-  
-      const fileId = file.id;
-      const dest = fs.createWriteStream(downloadPath);
-  
-      drive.files.get({ fileId, alt: 'media' }, { responseType: 'stream' }, (err, res) => {
-          if (err) {
-              console.error(err);
-              return;
-          }
-  
-          res.data.pipe(dest);
-      });
-  }
-  
-  downloadFile('nf-marco.pdf', "./example.pdf")
-      .then(() => console.log('File downloaded successfully.'));
+}
 
-/* uploadFile("./index.js", "aaa", "1VRBe85JlZmL2oOzaRSs_r9IaFFaU2z6D")
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
- */
+async function downloadFile(fileName, downloadPath) {
+    const file = await searchFile(fileName);
+    if (!file) return;
+
+    const fileId = file.id;
+    const dest = fs.createWriteStream(downloadPath);
+
+    drive.files.get({ fileId, alt: 'media' }, { responseType: 'stream' }, (err, res) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        res.data.pipe(dest);
+    });
+}
+
 module.exports = {
     uploadFile,
     downloadFile
