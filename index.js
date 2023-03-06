@@ -16,7 +16,7 @@ app.get("/gdrive/xlsx", async (req, res) => {
         return res.json(data);
     }
     catch(e){
-        return res.status(500).send(e);
+        return res.status(500).send("file not found or with restrict access");
     }
 })
 
