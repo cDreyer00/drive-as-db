@@ -5,14 +5,14 @@ const { json } = require("express");
 app.use(json());
 
 app.get("/gdrive/xlsx", async (req, res) => {
-    const { sheetName, fileName } = req.body;
+    const { sheetName, fileId } = req.body;
 
-    reqLog(fileName, sheetName);
+    reqLog(fileId, sheetName);
 
-    if(!fileName || !sheetName) return res.status(400).send("file name an sheet name need to be informed")
+    if(!fileId || !sheetName) return res.status(400).send("file name an sheet name need to be informed")
 
     try{
-        const data = await readFromDrive(fileName, sheetName);
+        const data = await readFromDrive(fileId, sheetName);
         return res.json(data);
     }
     catch(e){
@@ -20,11 +20,11 @@ app.get("/gdrive/xlsx", async (req, res) => {
     }
 })
 
-function reqLog(fileName, sheetName) {
+function reqLog(fileId, sheetName) {
     const date = new Date();
     console.log(`============================================================`)
-    console.log(`file required AT -> ${date.getHours()}:${date.getMinutes()}`)
-    console.log(`NAME -> ${fileName}\nSHEET_NAME -> ${sheetName}`)
+    console.log(`(${date.getHours()}:${date.getMinutes()})`)
+    console.log(`file_id -> ${fileId}\nsheet_name -> ${sheetName}`)
 }
 
 app.listen(3000, () => console.log("SERVER RUNNING AT http://localhost:3000"));
