@@ -2,10 +2,10 @@ const { google } = require('googleapis');
 const XLSX = require('xlsx');
 require("dotenv").config();
 
-const GCAPI_KEY_PATH = process.env.GCAPI_KEY_PATH;
+const credentials = "./credentials.json";
 
 const auth = new google.auth.GoogleAuth({
-    keyFile: GCAPI_KEY_PATH,
+    keyFile: credentials,
     scopes: [
         'https://www.googleapis.com/auth/drive',
         'https://www.googleapis.com/auth/drive.file',
@@ -17,7 +17,6 @@ const drive = google.drive({
     version: "v3",
     auth
 })
-
 
 function readFromDrive(fileId, sheetName) {
     return new Promise(async (resolve, reject) => {

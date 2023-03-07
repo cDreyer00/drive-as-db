@@ -4,9 +4,11 @@ const { json } = require("express");
 
 app.use(json());
 
-app.get("/gdrive/xlsx", async (req, res) => {
-    const { sheetName, fileId } = req.body;
+app.post("/gdrive/xlsx", async (req, res) => {
+    console.log("recieving request")
 
+    const { sheetName, fileId } = req.body;
+    
     reqLog(fileId, sheetName);
 
     if(!fileId || !sheetName) return res.status(400).send("file name an sheet name need to be informed")
@@ -16,7 +18,7 @@ app.get("/gdrive/xlsx", async (req, res) => {
         return res.json(data);
     }
     catch(e){
-        return res.status(500).send("file not found or with restrict access");
+        return res.status(400).send("file not found or with restrict access");
     }
 })
 
