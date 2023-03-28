@@ -2,18 +2,8 @@ require("dotenv").config();
 const fs = require('fs');
 const { google } = require('googleapis');
 
-const FOLDER_ID = process.env.DRIVE_FOLDER_ID;
-const GCAPI_KEY_PATH = process.env.GCAPI_KEY_PATH;
-
-const auth = new google.auth.GoogleAuth({
-    keyFile: GCAPI_KEY_PATH,
-    scopes: [
-        'https://www.googleapis.com/auth/drive',
-        'https://www.googleapis.com/auth/drive.file',
-        'https://www.googleapis.com/auth/drive.readonly'
-    ]
-})
-
+const apiKey = process.env.GOOGLE_API_KEY
+const auth = google.auth.fromAPIKey(apiKey)
 const drive = google.drive({
     version: "v3",
     auth

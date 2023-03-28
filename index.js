@@ -4,14 +4,14 @@ const { json } = require("express");
 
 app.use(json());
 
-app.post("/gdrive/xlsx", async (req, res) => {
+app.post("/", async (req, res) => {
     console.log("recieving request")
 
     const { sheetName, fileId } = req.body;
     
     reqLog(fileId, sheetName);
 
-    if(!fileId || !sheetName) return res.status(400).send("file name an sheet name need to be informed")
+    if(!fileId || !sheetName) return res.status(400).send("file name and sheet name need to be informed")
 
     try{
         const data = await readFromDrive(fileId, sheetName);
@@ -29,4 +29,4 @@ function reqLog(fileId, sheetName) {
     console.log(`file_id -> ${fileId}\nsheet_name -> ${sheetName}`)
 }
 
-app.listen(3000, () => console.log("SERVER RUNNING AT http://localhost:3000"));
+app.listen(3001, () => console.log("SERVER RUNNING AT http://localhost:3000"));
