@@ -8,16 +8,16 @@ app.post("/", async (req, res) => {
     console.log("recieving request")
 
     const { sheetName, fileId } = req.body;
-    
+
     reqLog(fileId, sheetName);
 
-    if(!fileId || !sheetName) return res.status(400).send("file name and sheet name need to be informed")
+    if (!fileId || !sheetName) return res.status(400).send("file name and sheet name need to be informed")
 
-    try{
+    try {
         const data = await readFromDrive(fileId, sheetName);
         return res.json(data);
     }
-    catch(e){
+    catch (e) {
         return res.status(400).send("file not found or with restrict access");
     }
 })
@@ -29,4 +29,5 @@ function reqLog(fileId, sheetName) {
     console.log(`file_id -> ${fileId}\nsheet_name -> ${sheetName}`)
 }
 
-app.listen(3001, () => console.log("SERVER RUNNING AT http://localhost:3000"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`SERVER RUNNING AT http://localhost:${PORT}`));
